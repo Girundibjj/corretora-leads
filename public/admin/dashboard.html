@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="admin-style.css">
     <style>
         /* Estilização Estrutural do Dashboard */
-        .dashboard-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .dashboard-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .meta-card { background: #F7F4F0; padding: 15px; border-radius: 6px; border: 1px solid #E6DFD5; text-align: center; }
         .meta-card h4 { font-size: 0.75rem; color: #705C43; text-transform: uppercase; margin-bottom: 5px; }
         .meta-card p { font-size: 1.5rem; font-weight: bold; color: #4A3B2C; margin: 0; }
@@ -22,36 +22,33 @@
         
         /* Barras e Elementos Geométricos Nativos */
         .bar-native-container { display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; justify-content: flex-end; position: relative; }
-        .bar-native { width: 70%; border-radius: 4px 4px 0 0; min-height: 5px; transition: height 0.6s ease; position: relative; }
+        .bar-native { width: 65%; border-radius: 4px 4px 0 0; min-height: 5px; transition: height 0.5s ease; position: relative; }
         .bar-label-top { font-size: 0.75rem; font-weight: bold; color: #4A3B2C; margin-bottom: 4px; position: absolute; top: -20px; text-align: center; width: 100%; }
         .bar-label-bottom { font-size: 0.7rem; color: #705C43; font-weight: 600; margin-top: 8px; text-transform: uppercase; position: absolute; bottom: -25px; text-align: center; width: 100%; }
         
         /* Layout de Rosca/Pizza Nativo */
-        .donut-native-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; border-bottom: none !important; }
-        .donut-legend-grid { display: grid; grid-template-columns: 1fr; gap: 5px; width: 100%; margin-top: 10px; }
+        .donut-native-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border-bottom: none !important; }
+        .donut-legend-grid { display: grid; grid-template-columns: 1fr; gap: 6px; width: 100%; }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: #3D352E; }
         .legend-color { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
         
         /* Filtros Avançados */
         .filter-bar { background: #F7F4F0; padding: 15px; border-radius: 6px; border: 1px solid #E6DFD5; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
-        .filter-group { display: flex; flex-direction: column; gap: 5px; width: 100%; }
-        .filter-group input { padding: 10px 12px; border: 1px solid #E6DFD5; border-radius: 4px; font-size: 0.9rem; width: 100%; box-sizing: border-box; color: #3D352E; }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; }
+        .filter-group label { font-size: 0.75rem; font-weight: bold; color: #705C43; text-transform: uppercase; }
+        .filter-group input, .filter-group select { padding: 10px 12px; border: 1px solid #E6DFD5; border-radius: 4px; font-size: 0.9rem; color: #3D352E; }
         
         /* Botões de Exportação */
         .export-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-        .btn-export { padding: 10px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; color: #FFF; font-size: 0.85rem; transition: background 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-export { padding: 10px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; color: #FFF; font-size: 0.85rem; }
         .btn-excel { background-color: #2E7D32; }
         .btn-excel:hover { background-color: #1B5E20; }
-        .btn-pdf { background-color: #C62828; }
-        .btn-pdf:hover { background-color: #B71C1C; }
 
-        /* Inputs Inline da Tabela */
+        /* Estilização Inline das Linhas da Tabela */
         .input-inline { width: 100%; padding: 6px; border: 1px solid #E6DFD5; border-radius: 4px; font-size: 0.85rem; margin-bottom: 5px; box-sizing: border-box; color: #3D352E; }
         .group-title { font-size: 0.7rem; font-weight: bold; color: #705C43; text-transform: uppercase; margin: 4px 0 2px 0; display: block; }
-        .btn-action-save { background: #4A3B2C; color: #FFF; font-size: 0.75rem; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; width: 100%; font-weight: bold; transition: background 0.2s; }
-        .btn-action-save:hover { background: #33281E; }
-        .btn-action-delete { background: #C62828; color: #FFF; font-size: 0.75rem; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; width: 100%; font-weight: bold; margin-top: 4px; transition: background 0.2s; }
-        .btn-action-delete:hover { background: #9A1F1F; }
+        .btn-action-save { background: #4A3B2C; color: #FFF; font-size: 0.75rem; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; width: 100%; font-weight: bold; }
+        .btn-action-delete { background: #C62828; color: #FFF; font-size: 0.75rem; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; width: 100%; font-weight: bold; margin-top: 4px; }
         
         .temp-quente { color: #E65100 !important; }
         .temp-morno { color: #FBC02D !important; }
@@ -69,10 +66,10 @@
 
     <main class="container dashboard-main">
         
-        <!-- Cartões de Métricas Estatísticas -->
+        <!-- Cartões de Métricas Dinâmicas -->
         <section class="dashboard-meta">
             <div class="meta-card">
-                <h4>Total Mapeado</h4>
+                <h4>Total Geral (Filtrado)</h4>
                 <p id="metaTotal">0</p>
             </div>
             <div class="meta-card" style="border-top: 3px solid #E65100;">
@@ -80,47 +77,59 @@
                 <p id="metaQuente">0</p>
             </div>
             <div class="meta-card" style="border-top: 3px solid #2E7D32;">
-                <h4>Vendas Confirmadas</h4>
+                <h4>Volume Vendas</h4>
                 <p id="metaVendas">R$ 0,00</p>
             </div>
-            <div class="meta-card" style="border-top: 3px solid #0288D1;">
-                <h4>Aluguéis Ativos</h4>
-                <p id="metaAlugueis">R$ 0,00</p>
+            <div class="meta-card" style="border-top: 3px solid #00796B;">
+                <h4>Comissões Recebidas</h4>
+                <p id="metaComissoes">R$ 0,00</p>
             </div>
         </section>
 
-        <!-- GRÁFICOS VISUAIS NATIVOS (RESOLVE O ERRO CHART IS NOT DEFINED DEFINITIVAMENTE) -->
+        <!-- Gráficos Visuais Nativos -->
         <section class="bi-section">
             <div class="chart-card">
-                <h3>Volume por Status</h3>
-                <div class="chart-wrapper" id="nativeChartFunil" style="margin-bottom: 25px;">
-                    <!-- Injetado dinamicamente via Javascript -->
-                </div>
+                <h3>Volume por Status do Funil</h3>
+                <div class="chart-wrapper" id="nativeChartFunil" style="margin-bottom: 25px;"></div>
             </div>
             <div class="chart-card">
                 <h3>Temperatura Comercial</h3>
-                <div class="chart-wrapper donut-native-container" id="nativeChartTemperatura">
-                    <!-- Injetado dinamicamente via Javascript -->
-                </div>
+                <div class="chart-wrapper donut-native-container" id="nativeChartTemperatura"></div>
             </div>
             <div class="chart-card">
-                <h3>Faturamento por Período</h3>
-                <div class="chart-wrapper" id="nativeChartFinanceiro" style="margin-bottom: 25px;">
-                    <!-- Injetado dinamicamente via Javascript -->
-                </div>
+                <h3>Faturamento vs Comissões</h3>
+                <div class="chart-wrapper" id="nativeChartFinanceiro" style="margin-bottom: 25px;"></div>
             </div>
         </section>
 
-        <!-- Botões Nativos de Geração de Relatórios CSV (Excel) e Impressão (PDF) -->
+        <!-- Botões de Exportação Otimizados -->
         <section class="export-buttons">
-            <button onclick="exportarParaExcelNativo()" class="btn-export btn-excel">📊 Exportar Lista Excel (.csv)</button>
-            <button onclick="exportarParaPDFNativo()" class="btn-export btn-pdf">📄 Imprimir Relatório PDF (.pdf)</button>
+            <button onclick="exportarExcelOtimizado()" class="btn-export btn-excel">📊 Exportar para Excel (.csv)</button>
+            <button onclick="window.print()" class="btn-export btn-pdf" style="background-color:#C62828;">📄 Imprimir Relatório PDF</button>
         </section>
 
-        <!-- Filtros Avançados -->
+        <!-- Barra de Filtros Avançados Completos -->
         <section class="filter-bar">
+            <div class="filter-group" style="flex: 2;">
+                <label>Buscar por Texto:</label>
+                <input type="text" id="buscaNome" placeholder="Nome, WhatsApp ou especificações do imóvel..." oninput="filtrarPainel()">
+            </div>
             <div class="filter-group">
-                <input type="text" id="buscaNome" placeholder="Filtrar instantaneamente por nome ou WhatsApp na lista..." oninput="filtrarPainel()">
+                <label>Filtrar Região:</label>
+                <select id="filtroRegiao" onchange="filtrarPainel()">
+                    <option value="todos" selected>Todas as Regiões</option>
+                    <option value="Uberlândia">Uberlândia</option>
+                    <option value="Belo Horizonte">Belo Horizonte</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Filtrar Período:</label>
+                <select id="filtroPeriodo" onchange="filtrarPainel()">
+                    <option value="todos" selected>Todo o Histórico</option>
+                    <option value="semana">Semanal (Últimos 7 dias)</option>
+                    <option value="mes">Mensal (Últimos 30 dias)</option>
+                    <option value="ano">Anual (Último Ano)</option>
+                </select>
             </div>
         </section>
         
@@ -128,7 +137,7 @@
         <section class="form-section" style="padding: 0 0 40px 0;">
             <div class="form-container" style="max-width: 100%; margin: 0;">
                 <h2>Registrar Nova Lead Manual</h2>
-                <form action="/api/admin/leads/manual" method="POST" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; align-items: end;">
+                <form action="/api/admin/leads/manual" method="POST" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; align-items: end;">
                     <input type="text" name="nome" required placeholder="Nome">
                     <input type="tel" name="whatsapp" required placeholder="WhatsApp">
                     <input type="email" name="email" required placeholder="E-mail">
@@ -166,11 +175,11 @@
                 <table class="leads-table">
                     <thead>
                         <tr>
-                            <th>Data Entrada</th>
-                            <th>Dados Cadastrais (Corrigíveis)</th>
+                            <th>Data / Retorno</th>
+                            <th>Cadastro Base</th>
                             <th>Segmentação</th>
-                            <th>Requisitos de Busca (Privado Ariela)</th>
-                            <th>Fechamento Financeiro</th>
+                            <th>Especificações da Busca</th>
+                            <th>Faturamento & Comissões</th>
                             <th>Histórico / Ações</th>
                         </tr>
                     </thead>
@@ -184,9 +193,7 @@
         let dadosLeadsGlobais = [];
         let leadsFiltradasAtuais = []; 
 
-        window.addEventListener('DOMContentLoaded', () => { 
-            carregarLeads(); 
-        });
+        window.addEventListener('DOMContentLoaded', () => { carregarLeads(); });
 
         async function carregarLeads() {
             try {
@@ -194,21 +201,36 @@
                 if(resposta.status === 401) { window.location.href = '/admin/login.html'; return; }
                 dadosLeadsGlobais = await resposta.json();
                 filtrarPainel();
-            } catch (err) { console.error("Erro na leitura dos dados:", err); }
+            } catch (err) { console.error(err); }
         }
 
         function filtrarPainel() {
             const busca = document.getElementById('buscaNome').value.toLowerCase();
+            const regiao = document.getElementById('filtroRegiao').value;
+            const periodo = document.getElementById('filtroPeriodo').value;
+            const agora = new Date();
             
             leadsFiltradasAtuais = dadosLeadsGlobais.filter(lead => {
-                return lead.nome.toLowerCase().includes(busca) || lead.whatsapp.includes(busca);
+                const textoMatch = lead.nome.toLowerCase().includes(busca) || 
+                                   lead.whatsapp.includes(busca) ||
+                                   (lead.tipologia_imovel && lead.tipologia_imovel.toLowerCase().includes(busca));
+                
+                const regiaoMatch = regiao === 'todos' || lead.cidade_interesse === regiao;
+                
+                const dataLead = new Date(lead.data_cadastro);
+                const difDias = (agora - dataLead) / (1000 * 60 * 60 * 24);
+                let tempoMatch = true;
+                if (periodo === 'semana') tempoMatch = difDias <= 7;
+                else if (periodo === 'mes') tempoMatch = difDias <= 30;
+                else if (periodo === 'ano') tempoMatch = difDias <= 365;
+                
+                return textoMatch && regiaoMatch && tempoMatch;
             });
 
             renderizarTabela(leadsFiltradasAtuais);
             atualizarGraficosEMetricasNativos(leadsFiltradasAtuais);
         }
 
-        // REDIRECIONAMENTO COM A "/" CORRIGIDA TOTALMENTE
         function formatarWhatsAppSeguro(numeroBruto) {
             if (!numeroBruto) return "#";
             let limpo = numeroBruto.toString().replace(/\D/g, "");
@@ -224,9 +246,14 @@
                 const dCadastro = new Date(lead.data_cadastro).toLocaleDateString('pt-BR');
                 const linkWpp = formatarWhatsAppSeguro(lead.whatsapp);
                 
+                // AJUSTE SOLICITADO: Rótulos descritivos inseridos antes dos campos de entrada de faturamento
                 corpo.innerHTML += `
                     <tr id="linha-${lead.id}">
-                        <td><small>${dCadastro}</small></td>
+                        <td>
+                            <small><strong>Entrada:</strong> ${dCadastro}</small><br>
+                            <span class="group-title">Retorno Lembrete:</span>
+                            <input type="datetime-local" id="retorno-${lead.id}" value="${lead.data_hora_retorno || ''}" class="input-inline">
+                        </td>
                         <td>
                             <input type="text" id="nome-${lead.id}" value="${lead.nome}" class="input-inline" required>
                             <input type="email" id="email-${lead.id}" value="${lead.email}" class="input-inline" required>
@@ -244,16 +271,12 @@
                                 <option value="alugar_quer" ${lead.servico_busca === 'alugar_quer' ? 'selected' : ''}>Quer Alugar</option>
                                 <option value="alugar_proprietario" ${lead.servico_busca === 'alugar_proprietario' ? 'selected' : ''}>Proprietário</option>
                             </select>
-                            <select id="interesse-${lead.id}" class="input-inline">
-                                <option value="lancamento" ${lead.perfil_imovel === 'lancamento' ? 'selected' : ''}>Lançamento</option>
-                                <option value="pronto" ${lead.perfil_imovel === 'pronto' ? 'selected' : ''}>Pronto</option>
-                            </select>
                         </td>
                         <td>
-                            <span class="group-title">Perfil Buscado:</span>
-                            <input type="text" id="desc_busca-${lead.id}" value="${lead.descricao_busca || ''}" class="input-inline" placeholder="Ex: Casa com suite">
+                            <span class="group-title">Tipo de Imóvel:</span>
+                            <input type="text" id="tipo-${lead.id}" value="${lead.tipologia_imovel || ''}" class="input-inline" placeholder="Ex: Apto 3 quartos">
                             <div style="display:flex; gap:4px;">
-                                <input type="number" id="val_min-${lead.id}" value="${lead.valor_minimo || ''}" class="input-inline" placeholder="R$ Min">
+                                <input type="number" id="val_min-${lead.id}" value="${lead.valor_minimo || ''}" class="input-inline" placeholder="R$ Mín">
                                 <input type="number" id="val_max-${lead.id}" value="${lead.valor_maximo || ''}" class="input-inline" placeholder="R$ Max">
                             </div>
                         </td>
@@ -269,8 +292,16 @@
                                 <option value="Morno" ${lead.temperatura_lead === 'Morno' ? 'selected' : ''}>⚡ Morno</option>
                                 <option value="Frio" ${lead.temperatura_lead === 'Frio' ? 'selected' : ''}>❄️ Frio</option>
                             </select>
-                            <span class="group-title">Valor do Fechamento (R$):</span>
-                            <input type="number" id="val_fechado-${lead.id}" value="${lead.valor_fechado || '0'}" class="input-inline" placeholder="Valor Real">
+                            <div style="display:flex; gap:4px; margin-top:4px;">
+                                <div style="flex:1;">
+                                    <span class="group-title" style="margin-top:0;">Venda (R$):</span>
+                                    <input type="number" id="val_fechado-${lead.id}" value="${lead.valor_fechado || '0'}" class="input-inline" placeholder="Valor Real">
+                                </div>
+                                <div style="width:75px;">
+                                    <span class="group-title" style="margin-top:0;">Comissão (%):</span>
+                                    <input type="number" id="comissao-${lead.id}" value="${lead.porcentagem_comissao || '0'}" class="input-inline" placeholder="%">
+                                </div>
+                            </div>
                         </td>
                         <td>
                             <textarea id="anotacoes-${lead.id}" rows="2" class="input-inline" placeholder="Anotações...">${lead.anotacoes_internas || ''}</textarea>
@@ -290,14 +321,15 @@
                 whatsapp: document.getElementById(`whatsapp-${id}`).value,
                 cidade: document.getElementById(`cidade-${id}`).value,
                 servico: document.getElementById(`servico-${id}`).value,
-                interesse: document.getElementById(`interesse-${id}`).value,
                 status: document.getElementById(`status-${id}`).value,
                 temperatura: document.getElementById(`temperatura-${id}`).value,
                 anotacoes: document.getElementById(`anotacoes-${id}`).value,
-                descricao_busca: document.getElementById(`desc_busca-${id}`).value,
+                tipologia: document.getElementById(`tipo-${id}`).value,
                 valor_minimo: document.getElementById(`val_min-${id}`).value || 0,
                 valor_maximo: document.getElementById(`val_max-${id}`).value || 0,
-                valor_fechado: document.getElementById(`val_fechado-${id}`).value || 0
+                valor_fechado: document.getElementById(`val_fechado-${id}`).value || 0,
+                porcentagem_comissao: document.getElementById(`comissao-${id}`).value || 0,
+                data_retorno: document.getElementById(`retorno-${id}`).value || null
             };
 
             try {
@@ -318,59 +350,47 @@
             } catch (err) { console.error(err); }
         }
 
-        // ENGENHARIA DE SOFTWARE AVANÇADA (ADS): Motores de Renderização de Gráficos Nativos via CSS/DOM Dinâmico
         function atualizarGraficosEMetricasNativos(leads) {
             let statusC = { 'Novo': 0, 'Atendimento': 0, 'Fechado': 0, 'Perdido': 0 };
             let tempC = { 'Quente': 0, 'Morno': 0, 'Frio': 0 };
-            let totalVendas = 0; let totalAlugueis = 0;
+            let totalVendas = 0; let totalComissoes = 0;
 
             leads.forEach(lead => {
-                // Sincroniza nomenclatura com chaves
                 let st = lead.status_atendimento;
                 if(st === 'Em Atendimento') st = 'Atendimento';
                 if(st === 'Sem Interesse') st = 'Perdido';
                 
                 if (statusC[st] !== undefined) statusC[st]++;
-                
                 if (lead.status_atendimento !== 'Fechado' && lead.status_atendimento !== 'Sem Interesse') {
                     if (tempC[lead.temperatura_lead] !== undefined) tempC[lead.temperatura_lead]++;
                 }
                 if (lead.status_atendimento === 'Fechado') {
                     const val = parseFloat(lead.valor_fechado) || 0;
-                    if (lead.servico_busca === 'comprar' || lead.servico_busca === 'vender') totalVendas += val;
-                    if (lead.servico_busca === 'alugar_quer' || lead.servico_busca === 'alugar_proprietario') totalAlugueis += val;
+                    const porc = parseFloat(lead.porcentagem_comissao) || 0;
+                    totalVendas += val;
+                    totalComissoes += (val * (porc / 100));
                 }
             });
 
-            // Atualiza os cartões superiores
             document.getElementById('metaTotal').innerText = leads.length;
             document.getElementById('metaQuente').innerText = tempC['Quente'];
             document.getElementById('metaVendas').innerText = totalVendas.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            document.getElementById('metaAlugueis').innerText = totalAlugueis.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('metaComissoes').innerText = totalComissoes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-            // Encontra a maior contagem para servir de escala 100% nas barras
             const maxValStatus = Math.max(...Object.values(statusC), 1);
-            const maxValFinanc = Math.max(totalVendas, totalAlugueis, 1);
+            const maxValFinanc = Math.max(totalVendas, totalComissoes, 1);
 
-            // 1. Renderiza o Gráfico NAtivo de Funil (Barras)
+            // 1. Gráfico Funil
             const wrapperFunil = document.getElementById('nativeChartFunil');
             wrapperFunil.innerHTML = '';
             const coresStatus = { 'Novo': '#A39E99', 'Atendimento': '#8B7355', 'Fechado': '#2E7D32', 'Perdido': '#C62828' };
-            
             Object.keys(statusC).forEach(key => {
                 const pct = (statusC[key] / maxValStatus) * 100;
-                wrapperFunil.innerHTML += `
-                    <div class="bar-native-container">
-                        <div class="bar-label-top">${statusC[key]}</div>
-                        <div class="bar-native" style="height: ${pct}%; background-color: ${coresStatus[key]};"></div>
-                        <div class="bar-label-bottom">${key}</div>
-                    </div>
-                `;
+                wrapperFunil.innerHTML += `<div class="bar-native-container"><div class="bar-label-top">${statusC[key]}</div><div class="bar-native" style="height: ${pct}%; background-color: ${coresStatus[key]};"></div><div class="bar-label-bottom">${key}</div></div>`;
             });
 
-            // 2. Renderiza o Gráfico Nativo de Temperatura (Indicadores de Funil Comercial)
-            const wrapperTemp = document.getElementById('nativeChartTemperatura');
-            wrapperTemp.innerHTML = `
+            // 2. Gráfico Temperatura
+            document.getElementById('nativeChartTemperatura').innerHTML = `
                 <div class="donut-legend-grid">
                     <div class="legend-item"><span class="legend-color" style="background:#E65100"></span>🔥 Quentes: ${tempC['Quente']}</div>
                     <div class="legend-item"><span class="legend-color" style="background:#FBC02D"></span>⚡ Mornas: ${tempC['Morno']}</div>
@@ -378,49 +398,27 @@
                 </div>
             `;
 
-            // 3. Renderiza o Gráfico Nativo Financeiro (Somas por período)
+            // 3. Gráfico Financeiro
             const wrapperFinanc = document.getElementById('nativeChartFinanceiro');
             wrapperFinanc.innerHTML = '';
-            
-            const dadosFin = { 'Vendas': totalVendas, 'Locação': totalAlugueis };
-            const coresFin = { 'Vendas': '#2E7D32', 'Locação': '#0288D1' };
-            
+            const dadosFin = { 'Vendas': totalVendas, 'Comissão': totalComissoes };
+            const coresFin = { 'Vendas': '#2E7D32', 'Comissão': '#00796B' };
             Object.keys(dadosFin).forEach(key => {
                 const pct = (dadosFin[key] / maxValFinanc) * 100;
-                wrapperFinanc.innerHTML += `
-                    <div class="bar-native-container">
-                        <div class="bar-label-top">R$ ${dadosFin[key].toFixed(0)}</div>
-                        <div class="bar-native" style="height: ${pct}%; background-color: ${coresFin[key]}; width: 50%;"></div>
-                        <div class="bar-label-bottom">${key}</div>
-                    </div>
-                `;
+                wrapperFinanc.innerHTML += `<div class="bar-native-container"><div class="bar-label-top">R$ ${dadosFin[key].toFixed(0)}</div><div class="bar-native" style="height: ${pct}%; background-color: ${coresFin[key]}; width: 50%;"></div><div class="bar-label-bottom">${key}</div></div>`;
             });
         }
 
-        // EXPORTAÇÕES NATIVAS: Geradas por injeção de blobs e janelas de impressão (Independente de CDNs externos)
-        function exportarParaExcelNativo() {
-            if(leadsFiltradasAtuais.length === 0) { alert('Sem dados disponíveis.'); return; }
-            
-            // Cria cabeçalho CSV compatível direto com o Excel em português brasileiro
-            let csvConteudo = "data:text/csv;charset=utf-8,\uFEFF";
-            csvConteudo += "Data Entrada;Nome;WhatsApp;Email;Cidade;Servico;Perfil;Status;Temperatura;Valor Real\n";
-            
+        function exportarExcelOtimizado() {
+            if(leadsFiltradasAtuais.length === 0) { alert('Sem dados.'); return; }
+            let csv = "data:text/csv;charset=utf-8,\uFEFFData;Nome;WhatsApp;Cidade;Status;Valor Real;Comissao %\n";
             leadsFiltradasAtuais.forEach(l => {
-                const dataStr = new Date(l.data_cadastro).toLocaleDateString('pt-BR');
-                csvConteudo += `${dataStr};${l.nome};${l.whatsapp};${l.email};${l.cidade_interesse};${l.servico_busca};${l.perfil_imovel};${l.status_atendimento};${l.temperatura_lead};${l.valor_fechado || 0}\n`;
+                csv += `${new Date(l.data_cadastro).toLocaleDateString('pt-BR')};${l.nome};${l.whatsapp};${l.cidade_interesse};${l.status_atendimento};${l.valor_fechado || 0};${l.porcentagem_comissao || 0}\n`;
             });
-
-            const linkOculto = document.createElement("a");
-            linkOculto.setAttribute("href", encodeURI(csvConteudo));
-            linkOculto.setAttribute("download", "Relatorio_Leads_Ariela_Rodrigues.csv");
-            document.body.appendChild(linkOculto);
-            linkOculto.click();
-            document.body.removeChild(linkOculto);
-        }
-
-        function exportarParaPDFNativo() {
-            // Usa o motor de impressão nativo do Windows em modo paisagem estruturado
-            window.print();
+            const link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csv));
+            link.setAttribute("download", "Relatorio_Leads.csv");
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
     </script>
 </body>
