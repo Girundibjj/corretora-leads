@@ -1,56 +1,65 @@
-const sqlite3 = require('sqlite3');
-const { open } = require('sqlite');
-const path = require('path');
+const { Pool } = require('pg');
 
-let dbInstance = null;
+let poolInstance = null;
 
-async function conectarBanco() {
-    if (dbInstance) return dbInstance;
+function conectarBanco() {
+    if (poolInstance) return poolInstance;
 
-    dbInstance = await open({
-        filename: path.join(__dirname, '../../database/corretora.db'),
-        driver: sqlite3.Database
+    // Conecta com a URL estável do Supabase informada no painel do Render
+    poolInstance = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false } // Obrigatório para segurança em nuvem
     });
 
-    console.log(' Conexão com o banco de dados (SQLite) estabelecida com sucesso!');
-
-    // Estrutura Completa de Produção (ADS Architecture)
-    await dbInstance.exec(`
+    // Criação automatizada das tabelas em padrão PostgreSQL
+    poolInstance.query(`
         CREATE TABLE IF NOT EXISTS usuarios_admin (
-            id INTEGER PRIMARY KEY,
+            id SERIAL PRIMARY KEY,
             nome TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
             senha TEXT NOT NULL
         );
 
         CREATE TABLE IF NOT EXISTS leads (
-            id INTEGER PRIMARY KEY,
+            id SERIAL PRIMARY KEY,
             nome TEXT NOT NULL,
             email TEXT NOT NULL,
             whatsapp TEXT NOT NULL,
             cidade_interesse TEXT NOT NULL,
             servico_busca TEXT NOT NULL,
-            perfil_imovel TEXT NOT NULL,
+            perfil_imovel TEXT NULL,
             status_atendimento TEXT DEFAULT 'Novo',
             temperatura_lead TEXT DEFAULT 'Morno',
             anotacoes_internas TEXT NULL,
-            data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-            
-            -- NOVAS COLUNAS COMPORTAMENTAIS E FINANCEIRAS
-            descricao_busca TEXT NULL,
-            valor_minimo REAL DEFAULT 0,
-            valor_maximo REAL DEFAULT 0,
-            valor_fechado REAL DEFAULT 0
+            data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            tipologia_imovel TEXT NULL,
+            valor_minimo NUMERIC DEFAULT 0,
+            valor_maximo NUMERIC DEFAULT 0,
+            valor_fechado NUMERIC DEFAULT 0,
+            porcentagem_comissao NUMERIC DEFAULT 0,
+            data_hora_retorno TEXT NULL
         );
-    `);
 
-    // Inserção automática da usuária Ariela Rodrigues caso o banco acabe de ser criado
-    await dbInstance.exec(`
-        INSERT OR IGNORE INTO usuarios_admin (id, nome, email, senha)
-        VALUES (1, 'Ariela Rodrigues', 'ariela@corretora.com', '$2y$10$wM3O4yO3J.E3I6jN8/GfOeK6pQv8P3eH3qUv8Z2y1v5yY7u7m6t2y');
-    `);
+        INSERT INTO usuarios_admin (nome, email, senha)
+        VALUES ('Ariela Rodrigues', 'ariela@corretora.com', '$2y$10$wM3O4yO3J.E3I6jN8/GfOeK6pQv8P3eH3qUv8Z2y1v5yY7u7m6t2y')
+        ON CONFLICT (email) DO NOTHING;
+    `).then(() => {
+        console.log('🐘 Banco de dados PostgreSQL (Supabase) sincronizado com sucesso!');
+    }).catch(err => console.error('Erro de DDL no Postgres:', err));
 
-    return dbInstance;
+    return poolInstance;
 }
 
-module.exports = { conectarBanco };
+// Função adaptadora que simula o comportamento de queries do SQLite anterior
+async function query(text, params) {
+    const pool = conectarBanco();
+    const res = await pool.query(text, params);
+    return {
+        all: () => res.rows,
+        get: () => res.rows,
+        run: () => res
+    };
+}
+
+// CORREÇÃO: Exporta as duas funções de forma explícita para o server.js ler sem dar Crash
+module.exports = { conectarBanco, query };

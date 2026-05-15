@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'chave_reserva_segura_ariela_crm',
+    secret: process.env.SESSION_SECRET || '9h2f7b1v9c3x8z5m_ariela_pro',
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 1000 * 60 * 60 * 2 } // Expira em 2 horas
@@ -21,19 +21,13 @@ app.use(session({
 
 function verificarAutenticacao(req, res, next) {
     if (req.session && req.session.usuarioId) return next();
-    return res.status(401).json({ erro: 'Acesso negado. Faça login.' });
+    return res.status(401).json({ erro: 'Acesso negado.' });
 }
-
-// MAPEAMENTO COMPLETO DAS BIBLIOTECAS LOCAIS (SOLUÇÃO OFFLINE ABSOLUTA)
-app.use('/vendor/chart.js', express.static(path.join(__dirname, 'node_modules/chart.js/dist')));
-app.use('/vendor/xlsx', express.static(path.join(__dirname, 'node_modules/xlsx')));
-app.use('/vendor/jspdf', express.static(path.join(__dirname, 'node_modules/jspdf/dist')));
-app.use('/vendor/jspdf-autotable', express.static(path.join(__dirname, 'node_modules/jspdf-autotable/dist')));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 /* ==========================================================================
-   2. ROTA PÚBLICA (LANDING PAGE)
+   2. ROTA PÚBLICA (FORMULÁRIO DE CAPTAÇÃO DA LANDING PAGE)
    ========================================================================== */
 app.post('/api/leads', async (req, res) => {
     try {
@@ -43,8 +37,8 @@ app.post('/api/leads', async (req, res) => {
         }
         const db = await conectarBanco();
         const querySQL = `
-            INSERT INTO leads (nome, email, whatsapp, cidade_interesse, servico_busca, perfil_imovel, status_atendimento, temperatura_lead, anotacoes_internas) 
-            VALUES (?, ?, ?, ?, ?, ?, 'Novo', 'Morno', 'Lead recebida automaticamente via formulário do site.')
+            INSERT INTO leads (nome, email, whatsapp, cidade_interesse, servico_busca, perfil_imovel, status_atendimento, temperatura_lead, anotacoes_internas, valor_fechado, porcentagem_comissao) 
+            VALUES (?, ?, ?, ?, ?, ?, 'Novo', 'Morno', 'Cadastro realizado pelo site público.', 0, 0)
         `;
         await db.run(querySQL, [nome, email, whatsapp.replace(/\D/g, ""), cidade, servico, interesse]);
         res.send("<script>alert('Informações enviadas com sucesso!'); window.location.href='/';</script>");
@@ -55,7 +49,7 @@ app.post('/api/leads', async (req, res) => {
 });
 
 /* ==========================================================================
-   3. ROTAS DE AUTENTICAÇÃO
+   3. ROTAS DE AUTENTICAÇÃO (SISTEMA DE ACESSO)
    ========================================================================== */
 app.post('/api/admin/login', async (req, res) => {
     try {
@@ -78,9 +72,10 @@ app.get('/api/admin/logout', (req, res) => {
 });
 
 /* ==========================================================================
-   4. ROTAS PRIVADAS DA API (MÉTODO REST)
+   4. ROTAS PRIVADAS DA API (MÉTODO REST - RETORNO EM JSON PURO)
    ========================================================================== */
 
+// Buscar todas as leads do banco
 app.get('/api/admin/leads', verificarAutenticacao, async (req, res) => {
     try {
         const db = await conectarBanco();
@@ -92,19 +87,25 @@ app.get('/api/admin/leads', verificarAutenticacao, async (req, res) => {
     }
 });
 
+// ALINHAMENTO ABSOLUTO backend: Sincroniza perfeitamente com os ids do HTML
 app.put('/api/admin/leads/atualizar', verificarAutenticacao, async (req, res) => {
     try {
-        const { id, nome, email, whatsapp, cidade, servico, interesse, status, temperatura, anotacoes, descricao_busca, valor_minimo, valor_maximo, valor_fechado } = req.body;
+        const { id, nome, email, whatsapp, cidade, servico, status, temperatura, anotacoes, tipologia, valor_minimo, valor_maximo, valor_fechado, porcentagem_comissao, data_retorno } = req.body;
         const db = await conectarBanco();
         
         const whatsappLimpo = whatsapp ? whatsapp.replace(/\D/g, "") : "";
 
         const querySQL = `
             UPDATE leads 
-            SET nome = ?, email = ?, whatsapp = ?, cidade_interesse = ?, servico_busca = ?, perfil_imovel = ?, status_atendimento = ?, temperatura_lead = ?, anotacoes_internas = ?, descricao_busca = ?, valor_minimo = ?, valor_maximo = ?, valor_fechado = ?
+            SET nome = ?, email = ?, whatsapp = ?, cidade_interesse = ?, servico_busca = ?, status_atendimento = ?, temperatura_lead = ?, anotacoes_internas = ?, descricao_busca = ?, valor_minimo = ?, valor_maximo = ?, valor_fechado = ?, porcentagem_comissao = ?, data_hora_retorno = ?
             WHERE id = ?
         `;
-        await db.run(querySQL, [nome, email, whatsappLimpo, cidade, servico, interesse, status, temperatura, anotacoes, descricao_busca, valor_minimo || 0, valor_maximo || 0, valor_fechado || 0, id]);
+        
+        await db.run(querySQL, [
+            nome, email, whatsappLimpo, cidade, servico, status, temperatura, anotacoes, 
+            tipologia, valor_minimo || 0, valor_maximo || 0, valor_fechado || 0, porcentagem_comissao || 0, data_retorno || null, 
+            id
+        ]);
         
         res.setHeader('Content-Type', 'application/json');
         return res.status(200).json({ sucesso: true, message: 'Alterações salvas com sucesso!' });
@@ -114,13 +115,14 @@ app.put('/api/admin/leads/atualizar', verificarAutenticacao, async (req, res) =>
     }
 });
 
+// Cadastrar lead manual diretamente de dentro do CRM
 app.post('/api/admin/leads/manual', verificarAutenticacao, async (req, res) => {
     try {
         const { nome, email, whatsapp, cidade, servico, interesse, status, temperatura } = req.body;
         const db = await conectarBanco();
         const querySQL = `
-            INSERT INTO leads (nome, email, whatsapp, cidade_interesse, servico_busca, perfil_imovel, status_atendimento, temperatura_lead, anotacoes_internas, valor_fechado) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Inserido manualmente pelo painel.', 0)
+            INSERT INTO leads (nome, email, whatsapp, cidade_interesse, servico_busca, perfil_imovel, status_atendimento, temperatura_lead, anotacoes_internas, valor_fechado, porcentagem_comissao) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Inserido manualmente pelo painel.', 0, 0)
         `;
         await db.run(querySQL, [nome, email, whatsapp.replace(/\D/g, ""), cidade, servico, interesse, status, temperatura]);
         return res.redirect('/admin/dashboard.html');
@@ -130,6 +132,7 @@ app.post('/api/admin/leads/manual', verificarAutenticacao, async (req, res) => {
     }
 });
 
+// Deletar lead permanentemente do banco
 app.delete('/api/admin/leads/deletar/:id', verificarAutenticacao, async (req, res) => {
     try {
         const { id } = req.params;
@@ -143,9 +146,12 @@ app.delete('/api/admin/leads/deletar/:id', verificarAutenticacao, async (req, re
     }
 });
 
+/* ==========================================================================
+   5. INICIALIZAÇÃO DO SERVIDOR WEB
+   ========================================================================== */
 app.listen(PORT, async () => {
     await conectarBanco();
     console.log(`\n==================================================`);
-    console.log(`  Ariela CRM Advanced Pro ativo em: http://localhost:${PORT}`);
+    console.log(`  CRM online com comissoes e BI na porta ${PORT}`);
     console.log(`==================================================\n`);
 });
