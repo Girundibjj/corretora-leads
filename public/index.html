@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariela Rodrigues | Corretora de Imóveis</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Cabeçalho Principal com Redirecionamentos Externos Corretos e Codificados -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="logo">Ariela <span>Rodrigues</span></h1>
+            <nav class="nav-menu">
+                <a href="#atuacao">Atuação</a>
+                <a href="#contato">Solicitar Atendimento</a>
+                <!-- Link absoluto para o Instagram externo da Ariela -->
+                <a href="https://www.instagram.com/arielacorretora/" target="_blank">Instagram</a>
+                <!-- Link oficial universal wa.me codificado para evitar quebras no navegador -->
+                <a href="https://wa.me/5531984526910" target="_blank" class="btn-nav">Falar no WhatsApp</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero: Frase Comercial de Impacto Direto -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Soluções Imobiliárias sob medida em Uberlândia e BH</h2>
+            <p>Seja para comprar, vender ou alugar.</p>
+            <a href="#contato" class="btn-primary">Iniciar Meu Atendimento</a>
+        </div>
+    </section>
+
+    <!-- Apresentação da Profissional e Regiões de Atuação -->
+    <main class="container" id="atuacao">
+        <section class="perfil-section">
+            <div class="perfil-grid">
+                <!-- Imagem de Perfil da Corretora -->
+                <div class="perfil-foto-container">
+                    <img src="assets/ariela.jpg" alt="Ariela Rodrigues - Corretora de Imóveis" class="perfil-foto" onerror="this.src='https://placehold.co'">
+                </div>
+                <!-- Histórico e Foco de Atendimento -->
+                <div class="perfil-texto">
+                    <span>CRECI MGF 51943</span>
+                    <h2>Atendimento Exclusivo e Especializado</h2>
+                    <p>Com forte atuação no mercado imobiliário, ofereço assessoria completa e segura para todas as suas necessidades patrimoniais.</p>
+                    
+                    <div class="regioes-cards">
+                        <div class="regiao-item">
+                            <h3>Uberlândia</h3>
+                            <p>Foco estratégico em lançamentos exclusivos, imóveis na planta e grandes oportunidades de investimentos imobiliários.</p>
+                        </div>
+                        <div class="regiao-item">
+                            <h3>Belo Horizonte</h3>
+                            <p>Especialidade em imóveis prontos para morar de todos os padrões, cobrindo captação ágil, venda segura e gestão de locação.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulário de Captação de Leads Conectado ao Backend Node.js -->
+        <section id="contato" class="form-section">
+            <div class="form-container">
+                <h2>Fale Conosco</h2>
+                <p>Preencha os dados abaixo para direcionarmos o seu atendimento de forma personalizada.</p>
+                
+                <form id="leadForm" action="/api/leads" method="POST">
+                    
+                    <div class="form-group">
+                        <label for="nome">Nome Completo:</label>
+                        <input type="text" id="nome" name="nome" required placeholder="Ex: João Silva">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail de Contato:</label>
+                        <input type="email" id="email" name="email" required placeholder="Ex: joao@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp:</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" required placeholder="Ex: (31) 98452-6910">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cidade">Cidade do Imóvel:</label>
+                        <select id="cidade" name="cidade" required>
+                            <option value="" disabled selected>Selecione a cidade</option>
+                            <option value="Uberlândia">Uberlândia</option>
+                            <option value="Belo Horizonte">Belo Horizonte</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="servico">O que você precisa?</label>
+                        <select id="servico" name="servico" required>
+                            <option value="" disabled selected>Selecione o serviço</option>
+                            <option value="comprar">Comprar um Imóvel</option>
+                            <option value="vender">Vender meu Imóvel</option>
+                            <option value="alugar_quer">Alugar um Imóvel</option>
+                            <option value="alugar_proprietario">Colocar meu Imóvel para Alugar</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interesse">Perfil do Imóvel:</label>
+                        <select id="interesse" name="interesse" required>
+                            <option value="" disabled selected>Qual o perfil do imóvel?</option>
+                            <option value="lancamento">Lançamento</option>
+                            <option value="lancamento">Na Planta</option>
+                            <option value="pronto">Imóvel Pronto / Mudança Imediata</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Enviar Informações</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé Institucional Exigido por Lei (Inclusão do CRECI) -->
+    <footer class="main-footer">
+        <p>&copy; 2026 Ariela Rodrigues. Todos os direitos reservados. | CRECI MGF 51943</p>
+    </footer>
+
+    <!-- Carrega as validações e máscaras do frontend -->
+    <script src="js/main.js"></script>
+</body>
+</html>

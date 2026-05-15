@@ -1,0 +1,358 @@
+/* ==========================================================================
+   1. VARIÁVEIS DE DESIGN - PALETA PREMIUM MARROM E BRANCO
+   ========================================================================== */
+:root {
+    --cor-fundo: #FFFFFF;        /* Branco Puro e Limpo */
+    --cor-fundo-alt: #F7F4F0;    /* Marrom Creme ultra leve para contraste de seções */
+    --cor-primaria: #705C43;     /* Marrom Café com leite elegante */
+    --cor-primaria-escura: #4A3B2C; /* Marrom Escuro/Nobre para títulos e menus */
+    --cor-texto: #3D352E;        /* Texto acastanhado escuro (nunca cinza) */
+    --cor-borda: #E6DFD5;        /* Linhas divisórias em tom marrom suave */
+    --sombra-premium: 0 10px 30px rgba(74, 59, 44, 0.05);
+    
+    --fonte: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==========================================================================
+   2. REGRAS GERAIS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   3. CABEÇALHO (HEADER) - Marrom e Branco
+   ========================================================================== */
+.main-header {
+    background-color: var(--cor-fundo);
+    border-bottom: 1px solid var(--cor-borda);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--cor-primaria-escura);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--cor-primaria);
+    font-weight: 300;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--cor-primaria-escura);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: var(--cor-primaria);
+}
+
+.btn-nav {
+    border: 1px solid var(--cor-primaria);
+    padding: 6px 16px;
+    border-radius: 4px;
+    transition: all 0.3s !important;
+}
+
+.btn-nav:hover {
+    background-color: var(--cor-primaria);
+    color: var(--cor-fundo) !important;
+}
+
+/* ==========================================================================
+   4. SEÇÃO HERO
+   ========================================================================== */
+.hero {
+    background: linear-gradient(rgba(74, 59, 44, 0.65), rgba(42, 33, 24, 0.8)), 
+                url('../assets/fundo-imoveis.jpg') center/cover no-repeat;
+    background-color: var(--cor-primaria-escura);
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.hero-content h2 {
+    color: var(--cor-fundo);
+    font-size: 2.2rem;
+    font-weight: 700;
+    max-width: 800px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.hero-content p {
+    color: var(--cor-fundo-alt);
+    font-size: 1.2rem;
+    margin-bottom: 35px;
+    font-weight: 300;
+}
+
+.btn-primary, .btn-submit {
+    display: inline-block;
+    background-color: var(--cor-primaria);
+    color: var(--cor-fundo);
+    padding: 14px 36px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(112, 92, 67, 0.3);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover, .btn-submit:hover {
+    background-color: var(--cor-primaria-escura);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   5. SEÇÃO PERFIL DA ARIELA (Dimensões Reduzidas para Alinhamento Discreto)
+   ========================================================================== */
+.perfil-section {
+    padding: 80px 0;
+}
+
+.perfil-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.perfil-foto-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.perfil-foto {
+    width: 100%;
+    max-width: 430px; /* Reduzido para ficar mais discreto e sofisticado */
+    border-radius: 8px;
+    border: 10px solid var(--cor-fundo-alt);
+    box-shadow: var(--sombra-premium);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.perfil-foto:hover {
+    transform: scale(1.015);
+}
+
+.perfil-texto {
+    width: 100%;
+}
+
+.perfil-texto span {
+    color: var(--cor-primaria);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.perfil-texto h2 {
+    font-size: 2.3rem;
+    color: var(--cor-primaria-escura);
+    margin: 10px 0 20px 0;
+    line-height: 1.2;
+}
+
+.perfil-texto p {
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    margin-bottom: 30px;
+}
+
+.regioes-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.regiao-item {
+    background-color: var(--cor-fundo-alt);
+    padding: 25px;
+    border-left: 4px solid var(--cor-primaria);
+    border-radius: 0 8px 8px 0;
+}
+
+.regiao-item h3 {
+    color: var(--cor-primaria-escura);
+    margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   6. FORMULÁRIO DE CAPTAÇÃO
+   ========================================================================== */
+.form-section {
+    padding: 60px 0 100px 0;
+}
+
+.form-container {
+    background-color: var(--cor-fundo);
+    padding: 40px 25px;
+    border-radius: 8px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-premium);
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    font-size: 1.6rem;
+    color: var(--cor-primaria-escura);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form-container p {
+    text-align: center;
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--cor-primaria-escura);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 4px;
+    background-color: var(--cor-fundo-alt);
+    color: var(--cor-texto);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: var(--cor-primaria);
+    background-color: var(--cor-fundo);
+    box-shadow: 0 0 0 3px rgba(112, 92, 67, 0.1);
+}
+
+.btn-submit {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 16px;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   7. RODAPÉ
+   ========================================================================== */
+.main-footer {
+    background-color: var(--cor-primaria-escura);
+    color: var(--cor-fundo-alt);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   8. RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+@media (min-width: 768px) {
+    .main-header .container {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .hero-content h2 {
+        font-size: 3rem;
+    }
+
+    /* Grid distribuído assimetricamente: 40% para a coluna da foto e 60% para o texto */
+    .perfil-grid {
+        display: grid;
+        grid-template-columns: 40fr 60fr;
+        align-items: center;
+        gap: 50px;
+    }
+
+    .perfil-foto-container {
+        justify-content: flex-start;
+    }
+
+    .perfil-foto {
+        max-width: 430px;
+        position: sticky;
+        top: 120px;
+    }
+
+    .regioes-cards {
+        flex-direction: row;
+    }
+
+    .regiao-item {
+        flex: 1;
+    }
+
+    .form-container {
+        padding: 50px;
+    }
+}

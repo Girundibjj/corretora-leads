@@ -1,0 +1,20 @@
+corretora-leads/
+│
+├── database/
+│   └── schema.sql          <-- Script de criação do banco de dados MySQL
+│
+├── public/                 <-- Arquivos acessíveis pelo navegador (Frontend)
+│   ├── css/
+│   │   └── style.css       <-- Estilização da página (Mobile-First)
+│   ├── js/
+│   │   ├── main.js         <-- Lógica da página e validação do formulário
+│   │   └── imoveis.js      <-- O ARQUIVO DE FÁCIL EDIÇÃO (Array de Imóveis)
+│   ├── assets/             <-- Imagens dos imóveis e logotipo
+│   └── index.html          <-- Estrutura da Landing Page
+│
+├── src/                    <-- Código do servidor (Backend)
+│   ├── config/
+│   │   └── db.js           <-- Conexão segura com o MySQL
+│   └── enviar-lead.php     <-- Script que processa e salva a lead (Exemplo em PHP)
+│
+└── .gitignore              <-- Arquivo para ignorar senhas no GitHub
