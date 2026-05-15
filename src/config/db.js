@@ -1,17 +1,17 @@
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
 
 let poolInstance = null;
 
 function conectarBanco() {
     if (poolInstance) return poolInstance;
 
-    // Conecta com a URL estável do Supabase informada no painel do Render
     poolInstance = new Pool({
         connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false } // Obrigatório para segurança em nuvem
+        ssl: { rejectUnauthorized: false }
     });
 
-    // Criação automatizada das tabelas em padrão PostgreSQL
+    // Cria as tabelas iniciais
     poolInstance.query(`
         CREATE TABLE IF NOT EXISTS usuarios_admin (
             id SERIAL PRIMARY KEY,
@@ -39,27 +39,36 @@ function conectarBanco() {
             porcentagem_comissao NUMERIC DEFAULT 0,
             data_hora_retorno TEXT NULL
         );
+    `).then(async () => {
+        // SEGURANÇA AVANÇADA: Captura o e-mail e a senha secreta das variáveis privadas do servidor
+        const emailAdmin = process.env.ADMIN_EMAIL || 'ariela@corretora.com';
+        const senhaAdminBruta = process.env.ADMIN_PASS || 'ariela123';
+        
+        // Gera o Hash da senha (criptografia que impede a leitura direta no banco)
+        const salt = await bcrypt.genSalt(10);
+        const senhaCriptografada = await bcrypt.hash(senhaAdminBruta, salt);
 
-        INSERT INTO usuarios_admin (nome, email, senha)
-        VALUES ('Ariela Rodrigues', 'ariela@corretora.com', '$2y$10$wM3O4yO3J.E3I6jN8/GfOeK6pQv8P3eH3qUv8Z2y1v5yY7u7m6t2y')
-        ON CONFLICT (email) DO NOTHING;
-    `).then(() => {
-        console.log('🐘 Banco de dados PostgreSQL (Supabase) sincronizado com sucesso!');
+        // Atualiza ou insere o login protegido usando parâmetros preparados ($1, $2)
+        await poolInstance.query(`
+            INSERT INTO usuarios_admin (nome, email, senha)
+            VALUES ('Ariela Rodrigues', $1, $2)
+            ON CONFLICT (email) DO UPDATE SET senha = $2;
+        `, [emailAdmin, senhaCriptografada]);
+
+        console.log('🐘 PostgreSQL sincronizado com criptografia de ponta!');
     }).catch(err => console.error('Erro de DDL no Postgres:', err));
 
     return poolInstance;
 }
 
-// Função adaptadora que simula o comportamento de queries do SQLite anterior
 async function query(text, params) {
     const pool = conectarBanco();
     const res = await pool.query(text, params);
     return {
         all: () => res.rows,
-        get: () => res.rows,
+        get: () => res.rows[0], // Retorna o primeiro registro limpo para validação
         run: () => res
     };
 }
 
-// CORREÇÃO: Exporta as duas funções de forma explícita para o server.js ler sem dar Crash
 module.exports = { conectarBanco, query };
