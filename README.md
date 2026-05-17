@@ -8,11 +8,7 @@ Este projeto é um sistema completo de captação de clientes e CRM avançado co
 
 Este software nasceu de uma necessidade real de mercado: fornecer uma ferramenta robusta e centralizada para que minha esposa gerencie seus clientes, acompanhe o funil de vendas/locações e analise o faturamento periódico de forma estratégica.
 
-Como estudante de **Análise e Desenvolvimento de Sistemas (ADS)**, utilizei este projeto prático para consolidar meus conhecimentos em arquitetura backend, persistência relacional e manipulação dinâmica do DOM. 
-
-Durante o processo, adotei a **Inteligência Artificial (IA)** de forma intencional como um copiloto técnico. A IA foi aplicada para:
-*   Acelerar a resolução e depuração de erros complexos de rede e escopo (como conflitos no DOM e falhas de CDNs).
-*   Documentar e comentar de forma detalhada o código-fonte, servindo como uma ferramenta de apoio pedagógico para aprofundar meu entendimento técnico sobre fluxos assíncronos e dialetos SQL.
+Como estudante de **Análise e Desenvolvimento de Sistemas (ADS)**, utilizei este projeto prático para consolidar meus conhecimentos em arquitetura backend, persistência relacional e manipulação dinâmica do DOM, aplicando conceitos reais de engenharia de software para entregar um produto funcional e seguro.
 
 ---
 
@@ -29,16 +25,16 @@ Durante o processo, adotei a **Inteligência Artificial (IA)** de forma intencio
 *   **Sanitização de Strings**: Tratamento de dados telefônicos em tempo de execução para blindar o redirecionamento dinâmico de conversas para a API oficial do WhatsApp.
 
 ### 💾 Banco de Dados (Persistência)
-*   **SQLite3**: Modelagem relacional e persistência local baseada em arquivo físico (`.db`), garantindo portabilidade absoluta e rapidez nas operações CRUD.
+*   **PostgreSQL**: Modelagem relacional e persistência robusta, utilizando criptografia hash via `bcryptjs` para proteção e integridade dos dados de autenticação administrativa.
 
 ---
 
 ## 📈 Recursos e Fluxos do Sistema
 
 1.  **Landing Page Pública**: Formulário otimizado para o cliente registrar interesse informando segmentação (Uberlândia/BH), tipo de serviço (Compra/Venda/Locação) e perfil do imóvel (Pronto/Lançamento).
-2.  **Módulo de Login**: Autenticação restrita e segura para acesso ao painel de controle.
+2.  **Módulo de Login**: Autenticação restrita e segura com comparação de hash criptográfico para acesso ao painel de controle.
 3.  **Dashboard CRM**: Sistema CRUD completo que permite à corretora cadastrar leads manuais de captação externa (Instagram, telefone, indicações), editar cadastros base, registrar anotações de ligações e deletar registros.
-4.  **Termômetro de Leads**: Subdivisão comercial e classificação de clientes por temperatura (Quente 🔥, Morno ⚡, Frio ❄️) integrado aos indicadores e metas financeiras do topo.
+4.  **Termômetro de Leads**: Subdivisão comercial e classificação de clientes por temperatura (Quente 🔥, Morno ⚡, Frio ❄️) integrado aos indicadores e metas financeiras de comissões.
 
 ---
 
@@ -64,11 +60,11 @@ Para rodar e testar o ecossistema na sua máquina, você precisará ter instalad
    ```bash
    npm install
    ```
-5. Inicie o servidor web e o banco de dados:
+5. Configure as variáveis de ambiente criando um arquivo `.env` na raiz do projeto com base no arquivo `.env.example`.
+6. Inicie o servidor web:
    ```bash
    npm start
    ```
-6. Acesse as seguintes rotas no seu navegador de internet:
+7. Acesse as seguintes rotas no seu navegador de internet:
    *   **Site Público (Landing Page)**: `http://localhost:3000`
    *   **Painel Administrativo (Login)**: `http://localhost:3000/admin/login.html`
-   *   *(Credenciais de Acesso: ariela@corretora.com / ariela123)*

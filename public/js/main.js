@@ -8,7 +8,7 @@ function configurarFormulario() {
 
     if (!form) return;
 
-    // Aplica a máscara visual em tempo real para facilidade de leitura do cliente
+    // Mascara de telefone
     inputWhatsapp.addEventListener("input", (e) => {
         let valor = e.target.value.replace(/\D/g, "");
         if (valor.length > 11) valor = valor.slice(0, 11);
@@ -22,6 +22,7 @@ function configurarFormulario() {
         }
     });
 
+    // Validacao do envio
     form.addEventListener("submit", (e) => {
         const nome = document.getElementById("nome").value.trim();
         const whatsappLimpo = inputWhatsapp.value.replace(/\D/g, "");
@@ -38,7 +39,6 @@ function configurarFormulario() {
             return;
         }
         
-        // Força a substituição do valor do input pelo número puramente limpo antes de disparar o POST
         inputWhatsapp.value = whatsappLimpo;
     });
 }

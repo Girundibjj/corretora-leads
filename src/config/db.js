@@ -11,7 +11,6 @@ function conectarBanco() {
         ssl: { rejectUnauthorized: false }
     });
 
-    // Cria as tabelas iniciais
     poolInstance.query(`
         CREATE TABLE IF NOT EXISTS usuarios_admin (
             id SERIAL PRIMARY KEY,
@@ -40,22 +39,19 @@ function conectarBanco() {
             data_hora_retorno TEXT NULL
         );
     `).then(async () => {
-        // SEGURANÇA AVANÇADA: Captura o e-mail e a senha secreta das variáveis privadas do servidor
         const emailAdmin = process.env.ADMIN_EMAIL || 'ariela@corretora.com';
         const senhaAdminBruta = process.env.ADMIN_PASS || 'ariela123';
         
-        // Gera o Hash da senha (criptografia que impede a leitura direta no banco)
         const salt = await bcrypt.genSalt(10);
         const senhaCriptografada = await bcrypt.hash(senhaAdminBruta, salt);
 
-        // Atualiza ou insere o login protegido usando parâmetros preparados ($1, $2)
         await poolInstance.query(`
             INSERT INTO usuarios_admin (nome, email, senha)
             VALUES ('Ariela Rodrigues', $1, $2)
             ON CONFLICT (email) DO UPDATE SET senha = $2;
         `, [emailAdmin, senhaCriptografada]);
 
-        console.log('🐘 PostgreSQL sincronizado com criptografia de ponta!');
+        console.log('PostgreSQL conectado e tabelas sincronizadas.');
     }).catch(err => console.error('Erro de DDL no Postgres:', err));
 
     return poolInstance;
@@ -66,7 +62,7 @@ async function query(text, params) {
     const res = await pool.query(text, params);
     return {
         all: () => res.rows,
-        get: () => res.rows[0], // Retorna o primeiro registro limpo para validação
+        get: () => res.rows[0],
         run: () => res
     };
 }
